@@ -1,0 +1,28 @@
+name: Deploy to test
+on:
+  push:
+    branches:
+      - test
+      
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    steps: 
+      - uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - id: test-deploy
+        run: |
+          lastSuccessfulDeployment=$(aws deploy list-deployments --application-name ${{ secrets.APPLICATION_NAME }} --deployment-group-name ${{ secrets.DEPLOYMENT_GROUP }} --include-only-statuses "Succeeded" --query 'deployments[0]' --output text)
+          lastSuccessfulDeploymentArray=( $lastSuccessfulDeployment )
+          githubLocation=$(aws deploy get-deployment --deployment-id $lastSuccessfulDeploymentArray --query 'deploymentInfo.revision.gitHubLocation')
+          githubRepo=`echo "$githubLocation" | jq -r '.repository'`
+          githubCommit=`echo "$githubLocation" | jq -r '.commitId'`
+          aws deploy create-deployment --application-name ${{ secrets.APPLICATION_NAME }} --deployment-group-name ${{ secrets.DEPLOYMENT_GROUP }} --github-location repository=$githubRepo,commitId=$githubCommit
+        env:
+          APPLICATION_NAME: ${{ secrets.APPLICATION_NAME }}
+          DEPLOYMENT_GROUP: ${{ secrets.DEPLOYMENT_GROUP }}
