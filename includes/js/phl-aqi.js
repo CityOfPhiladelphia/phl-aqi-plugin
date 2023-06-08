@@ -80,7 +80,7 @@ jQuery(document).ready(function(){
         className: 'highcharts-color-purple',
       },{
         from: 251,
-        to: 300,
+        to: 500,
         thickness: 45,
         className: 'highcharts-color-maroon',
         }]
