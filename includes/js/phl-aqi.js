@@ -52,7 +52,7 @@ jQuery(document).ready(function(){
       },
       yAxis: {
         min: 1,
-        max: 300,
+        max: 500,
         plotBands: [{
           from: 0,
           to: 50,
@@ -75,11 +75,11 @@ jQuery(document).ready(function(){
         className: 'highcharts-color-red',
       },{
         from: 201,
-        to: 250,
+        to: 300,
         thickness: 45,
         className: 'highcharts-color-purple',
       },{
-        from: 251,
+        from: 301,
         to: 500,
         thickness: 45,
         className: 'highcharts-color-maroon',
