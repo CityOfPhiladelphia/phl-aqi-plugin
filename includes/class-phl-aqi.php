@@ -56,7 +56,7 @@ class PHL_AQI {
     ],
     [
       'label' => 'Hazardous',
-      'range' => '301 and higher',
+      'range' => '301 to 500',
       'desc' => 'Health warning of emergency conditions: everyone is more likely to be affected.',
       'color' => [
         'name' => 'Maroon',
