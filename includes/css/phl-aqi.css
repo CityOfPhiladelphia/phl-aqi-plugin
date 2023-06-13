@@ -113,7 +113,8 @@
 }
 
 .highcharts-data-label text, text.highcharts-data-label {
-  fill: #444;
+  fill: #444 !important;
+  font-size: 16px !important;
 }
 
 /* Loading */
